@@ -59,14 +59,18 @@ class BearShip(Player):
         eye_y_2 = y + eye_distance * math.sin(eye_angle_2) + (self.radius * 0.2)
         pygame.draw.circle(surface, (0, 0, 0), (eye_x_2, eye_y_2), eye_radius)
 
-        # Nose position - properly on the front of face
+        # Nose position
         nose_angle = math.radians(self.rotation)
-        nose_distance = self.radius * 0.8  # Move it to the front
-        nose_x = x + nose_distance * math.cos(nose_angle)
-        nose_y = y + nose_distance * math.sin(nose_angle)
-        
-        # Add vertical offset to bring it down from elephant position
-        nose_y += self.radius * 1.1  # Move down from top of head
+        nose_distance = self.radius * 0.1  # Reduced from 0.8
+        nose_down_offset = self.radius * 0.05    # Reduced from 0.4
+
+        # Calculate forward and downward vectors
+        forward = pygame.Vector2(nose_distance, 0).rotate(self.rotation)
+        downward = pygame.Vector2(0, nose_down_offset).rotate(self.rotation)
+
+        # Apply both vectors to position
+        nose_pos = self.position + forward + downward
+        nose_x, nose_y = nose_pos
         
         # Draw the nose
         nose_width = self.radius * 0.25
