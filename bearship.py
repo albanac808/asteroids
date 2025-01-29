@@ -59,28 +59,14 @@ class BearShip(Player):
         eye_y_2 = y + eye_distance * math.sin(eye_angle_2) + (self.radius * 0.2)
         pygame.draw.circle(surface, (0, 0, 0), (eye_x_2, eye_y_2), eye_radius)
 
-        # Nose position
-        nose_angle = math.radians(self.rotation)
-        nose_distance = self.radius * 0.1  # Reduced from 0.8
-        nose_down_offset = self.radius * 0.05    # Reduced from 0.4
+        # Define the forward and downward offsets for the nose
+        nose_distance = self.radius * 0.6  # Forward from head center
+        downward_offset = self.radius * 0.9  # Downward shift below the eyes
 
-        # Calculate forward and downward vectors
-        forward = pygame.Vector2(nose_distance, 0).rotate(self.rotation)
-        downward = pygame.Vector2(0, nose_down_offset).rotate(self.rotation)
+        # Align the nose position with the head's rotation
+        nose_angle = math.radians(self.rotation)  # Head's rotation in radians
+        nose_x = x + nose_distance * math.cos(nose_angle)  # Forward based on rotation angle
+        nose_y = y + nose_distance * math.sin(nose_angle) + downward_offset  # Push downward relative to face
 
-        # Apply both vectors to position
-        nose_pos = self.position + forward + downward
-        nose_x, nose_y = nose_pos
-        
-        # Draw the nose
-        nose_width = self.radius * 0.25
-        nose_height = self.radius * 0.15
-        nose_color = (80, 50, 20)
-        
-        nose_rect = pygame.Rect(
-            nose_x - nose_width/2,
-            nose_y - nose_height/2,
-            nose_width,
-            nose_height
-        )
-        pygame.draw.ellipse(surface, nose_color, nose_rect)
+        # Debug: Draw the red dot for the nose
+        pygame.draw.circle(surface, (255, 0, 0), (int(nose_x), int(nose_y)), 5)  # Small red dot for the nose  # Small red dot for the nose
