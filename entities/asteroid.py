@@ -3,6 +3,7 @@ import random
 from constants import *
 from circleshape import CircleShape
 
+# This is a comment. I will remove this later.
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
